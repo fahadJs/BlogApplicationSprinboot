@@ -5,6 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 @Entity
 @Table(name = "tbl_users")
 @NoArgsConstructor
@@ -14,8 +18,8 @@ public class Users {
 
     @Id
     @Column(name = "user_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
     @Column(name = "user_name", nullable = false, length = 100)
     private String name;
     @Column(name = "user_email", nullable = false, length = 100)
@@ -24,4 +28,7 @@ public class Users {
     private String password;
     @Column(name = "user_about", nullable = false, length = 500)
     private String about;
+
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    private List<Posts> postsArrayList = new ArrayList<>();
 }

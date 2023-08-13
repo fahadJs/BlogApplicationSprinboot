@@ -5,6 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 @Entity
 @Table(name = "tbl_categories")
 @Getter
@@ -13,11 +17,14 @@ import lombok.Setter;
 public class Categories {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "category_id")
-    private Integer id;
+    private UUID id;
     @Column(name = "category_title", nullable = false, length = 50)
     private String title;
     @Column(name = "category_desc", nullable = false, length = 500)
     private String desc;
+
+    @OneToMany(mappedBy = "categories", cascade = CascadeType.ALL)
+    private List<Posts> postsArrayList = new ArrayList<>();
 }

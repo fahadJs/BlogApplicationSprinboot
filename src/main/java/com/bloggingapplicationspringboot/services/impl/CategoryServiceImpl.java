@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,8 +29,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryDto updateCategory(CategoryDto categoryDto, Integer categoryId) {
-        Categories findCategory = this.categoryRepo.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category "," category Id ", categoryId));
+    public CategoryDto updateCategory(CategoryDto categoryDto, UUID categoryId) {
+        Categories findCategory = (Categories) this.categoryRepo.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category "," category Id ", categoryId));
         findCategory.setTitle(categoryDto.getTitle());
         findCategory.setDesc(categoryDto.getDesc());
 
@@ -48,14 +49,14 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryDto getAllCategoriesById(Integer categoryId) {
-        Categories findCategory = this.categoryRepo.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category "," category Id ", categoryId));
+    public CategoryDto getAllCategoriesById(UUID categoryId) {
+        Categories findCategory = (Categories) this.categoryRepo.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category "," category Id ", categoryId));
         return this.categoriesToDto(findCategory);
     }
 
     @Override
-    public void deleteCategory(Integer categoryId) {
-        Categories findCategory = this.categoryRepo.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category ", " category Id ", categoryId));
+    public void deleteCategory(UUID categoryId) {
+        Categories findCategory = (Categories) this.categoryRepo.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category ", " category Id ", categoryId));
         this.categoryRepo.delete(findCategory);
     }
 
