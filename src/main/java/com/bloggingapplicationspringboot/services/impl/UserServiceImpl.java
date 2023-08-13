@@ -1,0 +1,80 @@
+package com.bloggingapplicationspringboot.services.impl;
+
+import com.bloggingapplicationspringboot.entities.Users;
+import com.bloggingapplicationspringboot.exceptions.ResourceNotFoundException;
+import com.bloggingapplicationspringboot.payloads.UserDto;
+import com.bloggingapplicationspringboot.repositories.UserRepo;
+import com.bloggingapplicationspringboot.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class UserServiceImpl implements UserService {
+
+    @Autowired
+    private UserRepo userRepo;
+    @Override
+    public UserDto createUser(UserDto userDto) {
+        Users user = this.dtoToUser(userDto);
+        Users savedUser = this.userRepo.save(user);
+        return this.userToDto(savedUser);
+    }
+
+    @Override
+    public UserDto updateUser(UserDto userDto, Integer userId) {
+        Users users = this.userRepo.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User"," id ", userId));
+        users.setName(userDto.getName());
+        users.setEmail(userDto.getEmail());
+        users.setPassword(userDto.getPassword());
+        users.setAbout(userDto.getAbout());
+
+        Users updateUser = this.userRepo.save(users);
+        UserDto userDto1 = this.userToDto(updateUser);
+        return userDto1;
+    }
+
+    @Override
+    public UserDto getUserById(Integer userId) {
+
+        Users users = this.userRepo.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User"," id ", userId));
+        return this.userToDto(users);
+    }
+
+    @Override
+    public List<UserDto> getAllUsers() {
+        List<Users> users = this.userRepo.findAll();
+
+        List<UserDto> userDtos = users.stream().map(user -> this.userToDto(user)).collect(Collectors.toList());
+        return userDtos;
+    }
+
+    @Override
+    public void deleteUser(Integer userId) {
+        Users users = this.userRepo.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", " id ", userId));
+        this.userRepo.delete(users);
+
+    }
+
+    private Users dtoToUser (UserDto userDto){
+        Users users = new Users();
+        users.setId(userDto.getId());
+        users.setName(userDto.getName());
+        users.setEmail(userDto.getEmail());
+        users.setPassword(userDto.getPassword());
+        users.setAbout(userDto.getAbout());
+        return users;
+    }
+
+    private UserDto userToDto (Users users){
+        UserDto userDto = new UserDto();
+        userDto.setId(users.getId());
+        userDto.setName(users.getName());
+        userDto.setEmail(users.getEmail());
+        userDto.setPassword(users.getPassword());
+        userDto.setAbout(users.getAbout());
+        return userDto;
+    }
+}
