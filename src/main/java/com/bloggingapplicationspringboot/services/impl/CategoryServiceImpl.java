@@ -1,6 +1,7 @@
 package com.bloggingapplicationspringboot.services.impl;
 
 import com.bloggingapplicationspringboot.entities.Categories;
+import com.bloggingapplicationspringboot.exceptions.ResourceNotFoundException;
 import com.bloggingapplicationspringboot.payloads.CategoryDto;
 import com.bloggingapplicationspringboot.repositories.CategoryRepo;
 import com.bloggingapplicationspringboot.services.CategoryService;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -27,22 +29,34 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDto updateCategory(CategoryDto categoryDto, Integer categoryId) {
-        return null;
+        Categories findCategory = this.categoryRepo.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category "," category Id ", categoryId));
+        findCategory.setTitle(categoryDto.getTitle());
+        findCategory.setDesc(categoryDto.getDesc());
+
+        Categories updatedCategory = this.categoryRepo.save(findCategory);
+
+        return this.categoriesToDto(updatedCategory);
     }
 
     @Override
     public List<CategoryDto> getAllCategories() {
-        return null;
+        List<Categories> categories = this.categoryRepo.findAll();
+        List<CategoryDto> categoryDtoList = categories.stream()
+                .map(categories1 -> (this.categoriesToDto(categories1)))
+                .collect(Collectors.toList());
+        return categoryDtoList;
     }
 
     @Override
     public CategoryDto getAllCategoriesById(Integer categoryId) {
-        return null;
+        Categories findCategory = this.categoryRepo.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category "," category Id ", categoryId));
+        return this.categoriesToDto(findCategory);
     }
 
     @Override
     public void deleteCategory(Integer categoryId) {
-
+        Categories findCategory = this.categoryRepo.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category ", " category Id ", categoryId));
+        this.categoryRepo.delete(findCategory);
     }
 
     public Categories dtoToCategories (CategoryDto categoryDto){
