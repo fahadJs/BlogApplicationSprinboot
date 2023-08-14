@@ -1,5 +1,6 @@
 package com.bloggingapplicationspringboot.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,7 @@ public class Users {
     @Column(name = "user_about", nullable = false, length = 500)
     private String about;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
     private List<Posts> postsList;
 }

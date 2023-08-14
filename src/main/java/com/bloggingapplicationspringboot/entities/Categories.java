@@ -1,5 +1,6 @@
 package com.bloggingapplicationspringboot.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,7 @@ public class Categories {
     @Column(name = "category_desc", nullable = false, length = 500)
     private String desc;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "categories", cascade = CascadeType.ALL)
     private List<Posts> postsList;
 }

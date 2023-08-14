@@ -1,13 +1,13 @@
 package com.bloggingapplicationspringboot.services;
 
 import com.bloggingapplicationspringboot.payloads.PostDto;
+import com.bloggingapplicationspringboot.payloads.PostRequestDto;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface PostService {
 
-    PostDto createPost(PostDto postDto, Integer userId, Integer categoryId);
+    PostDto createPost(PostRequestDto postRequestDto);
 
     List<PostDto> getAllPost();
 

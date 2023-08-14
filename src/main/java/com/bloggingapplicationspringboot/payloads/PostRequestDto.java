@@ -1,22 +1,15 @@
 package com.bloggingapplicationspringboot.payloads;
 
-import com.bloggingapplicationspringboot.entities.Categories;
-import com.bloggingapplicationspringboot.entities.Users;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
-import java.util.UUID;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class PostDto {
-
-    private Integer id;
-
+public class PostRequestDto {
     private String title;
 
     private String content;
@@ -25,7 +18,7 @@ public class PostDto {
 
     private Date dateCreated;
 
-    private Categories category;
+    private Integer category;
 
-    private Users user;
+    private Integer user;
 }

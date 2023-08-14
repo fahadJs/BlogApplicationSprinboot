@@ -29,11 +29,11 @@ public class Posts {
     @Column(name = "post_image", nullable = false)
     private String imagePath;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     private Categories categories;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private Users users;
 }
