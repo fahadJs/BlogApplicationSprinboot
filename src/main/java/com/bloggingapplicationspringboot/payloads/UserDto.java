@@ -14,7 +14,7 @@ import java.util.UUID;
 @Setter
 public class UserDto {
 
-    private UUID id;
+    private Integer id;
 
     @NotEmpty
     private String name;

@@ -29,7 +29,7 @@ public class CategoryController {
 
     //    PUT REQUEST
     @PutMapping("/{categoryId}")
-    public ResponseEntity<CategoryDto> updateCategory(@Valid @RequestBody CategoryDto categoryDto, @PathVariable UUID categoryId){
+    public ResponseEntity<CategoryDto> updateCategory(@Valid @RequestBody CategoryDto categoryDto, @PathVariable Integer categoryId){
         CategoryDto updateCategory = this.categoryService.updateCategory(categoryDto, categoryId);
         return new ResponseEntity<>(updateCategory, HttpStatus.OK);
     }
@@ -42,14 +42,14 @@ public class CategoryController {
     }
     //    GET CATEGORIES BY ID
     @GetMapping("/{categoryId}")
-    public ResponseEntity<CategoryDto> getCategoriesById(@PathVariable UUID categoryId){
+    public ResponseEntity<CategoryDto> getCategoriesById(@PathVariable Integer categoryId){
         CategoryDto categoriesById = this.categoryService.getAllCategoriesById(categoryId);
         return new ResponseEntity<>(categoriesById, HttpStatus.OK);
     }
 
     //    DELETE CATEGORY REQUEST
     @DeleteMapping("/{categoryId}")
-    public ResponseEntity<ApiResponse> deleteCategory(@PathVariable UUID categoryId){
+    public ResponseEntity<ApiResponse> deleteCategory(@PathVariable Integer categoryId){
         this.categoryService.deleteCategory(categoryId);
         return new ResponseEntity<ApiResponse>(new ApiResponse("Category deleted successfully!",true), HttpStatus.OK);
     }

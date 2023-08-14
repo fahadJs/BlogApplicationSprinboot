@@ -27,21 +27,21 @@ public class UserController {
 
 //    PUT REQUEST
     @PutMapping("/{userId}")
-    public ResponseEntity<UserDto> updateUser(@Valid @RequestBody UserDto userDto, @PathVariable UUID userId){
+    public ResponseEntity<UserDto> updateUser(@Valid @RequestBody UserDto userDto, @PathVariable Integer userId){
         UserDto updatedUser = this.userService.updateUser(userDto, userId);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
 //    DELETE REQUEST
     @DeleteMapping("/{userId}")
-    public ResponseEntity<ApiResponse> deleteUser(@PathVariable UUID userId){
+    public ResponseEntity<ApiResponse> deleteUser(@PathVariable Integer userId){
         this.userService.deleteUser(userId);
         return new ResponseEntity<ApiResponse>(new ApiResponse("User Deleted Succesfully!",true), HttpStatus.OK);
     }
 
 //    GET SINGLE USER
     @GetMapping("/{userId}")
-    public ResponseEntity<UserDto> getSingleUser(@PathVariable UUID userId){
+    public ResponseEntity<UserDto> getSingleUser(@PathVariable Integer userId){
         return new ResponseEntity<>(this.userService.getUserById(userId), HttpStatus.OK);
     }
 

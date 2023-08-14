@@ -18,8 +18,8 @@ public class Users {
 
     @Id
     @Column(name = "user_id")
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     @Column(name = "user_name", nullable = false, length = 100)
     private String name;
     @Column(name = "user_email", nullable = false, length = 100)
