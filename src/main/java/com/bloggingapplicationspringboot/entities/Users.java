@@ -30,5 +30,5 @@ public class Users {
     private String about;
 
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
-    private List<Posts> postsArrayList = new ArrayList<>();
+    private List<Posts> postsList;
 }

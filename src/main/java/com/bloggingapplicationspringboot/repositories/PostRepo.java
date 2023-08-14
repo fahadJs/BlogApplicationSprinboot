@@ -10,6 +10,6 @@ import java.util.UUID;
 
 public interface PostRepo extends JpaRepository<Posts, Integer> {
 
-    List<Posts> findByUser(Users users);
-    List<Posts> findByCategory(Categories categories);
+//    List<Posts> findByUser(Users users);
+//    List<Posts> findByCategory(Categories categories);
 }

@@ -34,7 +34,6 @@ public class PostServiceImpl implements PostService {
     public PostDto createPost(PostDto postDto, Integer userId, Integer categoryId) {
         Users users = this.userRepo.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User "," user Id ", userId));
         Categories categories = this.categoryRepo.findById(categoryId).orElseThrow(()-> new ResourceNotFoundException("Category ", " category Id ", categoryId));
-
         Posts posts = this.dtoToPost(postDto);
         posts.setDateCreated(new Date());
         posts.setImagePath("new.png");
