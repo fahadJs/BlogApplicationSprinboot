@@ -17,8 +17,10 @@ public class PostDto {
 
     private Integer id;
 
+    @NotEmpty
     private String title;
 
+    @NotEmpty
     private String content;
 
     private String imagePath;

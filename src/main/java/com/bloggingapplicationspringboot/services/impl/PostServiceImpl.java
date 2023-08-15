@@ -5,7 +5,6 @@ import com.bloggingapplicationspringboot.entities.Posts;
 import com.bloggingapplicationspringboot.entities.Users;
 import com.bloggingapplicationspringboot.exceptions.ResourceNotFoundException;
 import com.bloggingapplicationspringboot.payloads.PostDto;
-import com.bloggingapplicationspringboot.payloads.PostRequestDto;
 import com.bloggingapplicationspringboot.repositories.CategoryRepo;
 import com.bloggingapplicationspringboot.repositories.PostRepo;
 import com.bloggingapplicationspringboot.repositories.UserRepo;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,18 +30,15 @@ public class PostServiceImpl implements PostService {
     private ModelMapper modelMapper;
 
     @Override
-    public PostDto createPost(PostRequestDto postRequestDto) {
-        Users users = this.userRepo.findById(postRequestDto.getUser()).orElseThrow(() -> new ResourceNotFoundException("User "," user Id ", postRequestDto.getUser()));
-        Categories categories = this.categoryRepo.findById(postRequestDto.getCategory()).orElseThrow(()-> new ResourceNotFoundException("Category ", " category Id ", postRequestDto.getCategory()));
-        Posts posts = modelMapper.map(postRequestDto, Posts.class);
+    public PostDto createPost(PostDto postDto, Integer userId, Integer categoryId) {
+        Users users = this.userRepo.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User "," user Id ", userId));
+        Categories categories = this.categoryRepo.findById(categoryId).orElseThrow(()-> new ResourceNotFoundException("Category ", " category Id ", categoryId));
+        Posts posts = modelMapper.map(postDto, Posts.class);
         posts.setDateCreated(new Date());
         posts.setImagePath("new.png");
         posts.setCategories(categories);
         posts.setUsers(users);
-
         Posts savePost = this.postRepo.save(posts);
-
-
         return modelMapper.map(savePost, PostDto.class);
     }
 
